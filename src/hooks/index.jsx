@@ -1,0 +1,1 @@
+export { useProductsAndCategories } from "./useProductsAndCategories";
