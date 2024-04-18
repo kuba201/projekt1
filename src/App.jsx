@@ -1,45 +1,27 @@
-import { useState, useMemo } from "react";
 import { ImageCardsHolder, Nav } from "./components";
-import { vegeList } from "./consts";
-import { useProductsAndCategories } from "./hooks";
+import { useContent } from "./hooks";
 
 export default function App() {
-  const { products, categories } = useProductsAndCategories();
-  const [currentCategory, setCurrentCategory] = useState(null);
-  //Custom hook*
-  const [vege, setVege] = useState(false);
-  const filtredProducts = useMemo(() => {
-    if (currentCategory)
-      return products.filter((product) => product.type === currentCategory.id);
-    else
-      return vege
-        ? products.filter((product) => !vegeList.includes(product.type))
-        : products;
-  }, [currentCategory, products, vege]);
-
-  const filteredCategories = useMemo(
-    () =>
-      vege
-        ? categories.filter((category) => !vegeList.includes(category.id))
-        : categories,
-    [vege, categories]
-  );
-
-  const handleSwitchVege = () => {
-    setVege(!vege);
-    setCurrentCategory(null);
-  };
+  const {
+    vege,
+    filtredCategories,
+    filtredProducts,
+    switchVege,
+    currentCategory,
+    setCurrentCategory,
+  } = useContent();
 
   return (
     <div className="main">
       <ImageCardsHolder products={filtredProducts} />
       <Nav
-        categories={filteredCategories}
+        isVege={vege}
+        categories={filtredCategories}
         currentCategory={currentCategory}
         onSelect={(selected) =>
           setCurrentCategory(selected === currentCategory ? null : selected)
         }
-        vegeSwitchChange={handleSwitchVege}
+        vegeSwitchChange={switchVege}
       />
     </div>
   );

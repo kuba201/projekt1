@@ -1,11 +1,14 @@
 import { NavElement } from "./NavElement";
+import { Switch } from "./Switch";
 
 export const Nav = ({
+  isVege,
   categories,
   onSelect,
   vegeSwitchChange,
   currentCategory,
 }) => {
+  console.log(isVege);
   return (
     <div className="categories">
       <p className="naglowek">Typy</p>
@@ -18,14 +21,7 @@ export const Nav = ({
           selected={category.id === currentCategory?.id}
         />
       ))}
-
-      <div className="switch-box">
-        <label className="switch">
-          <input type="checkbox" onChange={vegeSwitchChange} />
-          <span className="slider"></span>
-        </label>
-        <p>vege only</p>
-      </div>
+      <Switch checked={isVege} onVegeChange={vegeSwitchChange} />
     </div>
   );
 };
